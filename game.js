@@ -19,7 +19,7 @@ var tileW = 40, tileH = 40;
 //the tile width and height of the whole map
 var mapW = 10, mapH = 10;
 //variables used for framerate calculation
-//currentSecond 
+//currentSecond updates the current second
 var currentSecond = 0, frameCount = 0, framesLastSecond = 0, lastFrameTime = 0;
 var keysDown = {
     37 : false,
