@@ -19,8 +19,11 @@ var tileW = 40, tileH = 40;
 //the tile width and height of the whole map
 var mapW = 10, mapH = 10;
 //variables used for framerate calculation
-//currentSecond updates the current second
+//currentSecond stores the current second for which the framerate will be counted: it updates to the next second when 1 full second has elapsed
+//frameCount is used to show the number of frames per second: it increases by 1 each frame until a second has elapsed, then it resets to 1
+//framesLastSecond stores the frameCount from the previous second to display
 var currentSecond = 0, frameCount = 0, framesLastSecond = 0, lastFrameTime = 0;
+//
 var keysDown = {
     37 : false,
     38 : false,
