@@ -25,15 +25,47 @@ var keysDown = {
 //create a character to be controlled by the player
 var player = new Character();
 
+var viewport = {
+    screen          : [0,0],
+    startTile       : [0,0],
+    endTile         : [0,0],
+    offset          : [0,0],
+    update          : function(px, py){
+        this.offset[0] = Math.floor((this.screen[0]/2) - px)
+        this.offset[1] = Math.floor((this.screen[1]/2) - py)
+
+        var tile = [Math.floor(px/tileW), Math.floor(py/tileH)]
+
+        this.startTile[0] = tile[0] - 1 - Math.ceil((this.screen[0]/2) - tileW)
+        this.startTile[1] = tile[1] - 1 - Math.ceil((this.screen[1]/1) - tileH)
+
+        if(this.startTile[0] < 0) { this.startTile[0] = 0; }
+        if(this.startTile[1] < 0) { this.startTile[1] = 0; }
+        
+        this.endTile[0] = tile[0] + 1 + Math.ceil((this.screen[0]/2) / tileW);
+		this.endTile[1] = tile[1] + 1 + Math.ceil((this.screen[1]/2) / tileH);
+
+		if(this.endTile[0] >= mapW) { this.endTile[0] = mapW; }
+		if(this.endTile[1] >= mapH) { this.endTile[1] = mapH; }
+    }
+}
+
+console.log(viewport)
+
 //the initialisation function that runs on the window loading
 window.onload = function(){
     //obtain the canvas from the html document
     canvas = document.getElementById('game')
     //set the width and height of the canvas to match the dimensions of the map
-    canvas.width = tileW * mapW
-    canvas.height = tileH * mapH
+    //canvas.width = tileW * mapW
+    //canvas.height = tileH * mapH
     //get the 2-dimensional canvas context
     ctx = canvas.getContext('2d');
+
+    viewport.screen = [canvas.width, canvas.height]
+
+    console.log(viewport)
+
     //begin the draw loop for the game
     this.requestAnimationFrame(drawGame);
     //set the canvas font
@@ -60,8 +92,7 @@ function drawGame(){
     //obatin the current second
     var sec = Math.floor(Date.now()/1000);
     //if the true current second is not equal to the currentSecond variable:
-    if(sec!=currentSecond)                                                  //This means a second has elapsed
-    {                                                                       //
+    if(sec!=currentSecond){                                                 //This means a second has elapsed
         currentSecond = sec;                                                //set the currentSecond variable equal to the true current second
         framesLastSecond = frameCount;                                      //use the frameCount for the last second to set framesLastSecond equal to the number of frames in the last second
         frameCount = 1;                                                     //return frameCount to 1
@@ -80,22 +111,29 @@ function drawGame(){
 		{ player.timeMoved = currentFrameTime; }
     }
 
-    for (var y = 0; y < mapH; y++){
-        for (var x = 0; x < mapW; x++){
-            switch(gameMap[((y*mapW)+x)]){
+    viewport.update(player.position[0] + (player.dimensions[0]/2),
+        player.position[1] + (player.dimensions[1]/2))
 
+        
+    ctx.fillStyle = "#000000";
+	ctx.fillRect(0, 0, viewport.screen[0], viewport.screen[1]);
+
+	for(var y = viewport.startTile[1]; y <= viewport.endTile[1]; ++y){
+		for(var x = viewport.startTile[0]; x <= viewport.endTile[0]; ++x){
+            switch(gameMap[((y*mapW)+x)]){
                 case 0:
                     ctx.fillStyle = '#000000'
                     break;
                 default:
                     ctx.fillStyle = '#ccffcc'
             }
-            ctx.fillRect(x*tileW,y*tileH,tileW,tileH);
+            ctx.fillRect( viewport.offset[0] + (x*tileW), viewport.offset[1] + (y*tileH),
+				tileW, tileH);
         }
     }
 
     ctx.fillStyle = "#0000ff";
-	ctx.fillRect(player.position[0], player.position[1],
+	ctx.fillRect(viewport.offset[0] + player.position[0], viewport.offset[1] + player.position[1],
 		player.dimensions[0], player.dimensions[1]);
 
     ctx.fillStyle = '#ff0000'
