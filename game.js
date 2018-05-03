@@ -1,94 +1,75 @@
 //instantiate the canvas and its context
 var canvas = null
 var ctx = null
-//creating a temp map
-/*
-var gameMap = [
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
-	0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-];*/
-//creating a temp map
-/*
-var gameMap = [
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
-	0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-];*/
+
 //the pixel width and height of a single tile
+var tileW = 40, tileH = 40;
 //the tile width and height of the whole map
 var mapW = 20, mapH = 20;
 
 var gameMap = new blankMap(mapW,mapH)
+
 //variables used for framerate calculation
+//currentSecond stores the current second for which the framerate will be counted: it updates to the next second when 1 full second has elapsed
 //frameCount is used to show the number of frames per second: it increases by 1 each frame until a second has elapsed, then it resets to 1
+//framesLastSecond stores the frameCount from the previous second to display
 var currentSecond = 0, frameCount = 0, framesLastSecond = 0, lastFrameTime = 0;
+//create a variable that holds keypress information
 var keysDown = {
+    37 : false,
     38 : false,
     39 : false,
     40 : false 
+}
 
 //create a character to be controlled by the player
 var player = new Character();
 
+//the initialisation function that runs on the window loading
+window.onload = function(){
+    //obtain the canvas from the html document
     canvas = document.getElementById('game')
+    //set the width and height of the canvas to match the dimensions of the map
+    canvas.width = tileW * mapW
     canvas.height = tileH * mapH
-
+    //get the 2-dimensional canvas context
+    ctx = canvas.getContext('2d');
+    //begin the draw loop for the game
     this.requestAnimationFrame(drawGame);
+    //set the canvas font
+    ctx.font = 'bold 10pt sans-serif'
+    //add event listeners for key press and release
     window.addEventListener("keydown", function(e) {
-
+        //if the pressed key is one of the arrow keys, set the respective keyDown variable to be true
+		if(e.keyCode>=37 && e.keyCode<=40) { keysDown[e.keyCode] = true; }
 	});
-    if(sec!=currentSecond)
-    {
-        currentSecond = sec;
-        framesLastSecond = frameCount;
-        frameCount = 1;
-    }
-    else{frameCount++}
-    var timeElapsed = currentFrameTime - lastFrameTime;
-    var sec = Math.floor(Date.now()/1000);
-    if(sec!=currentSecond)
-    {
-        currentSecond = sec;
-        framesLastSecond = frameCount;
-        frameCount = 1;
-    }
-    else{frameCount++}
+	window.addEventListener("keyup", function(e) {
+        //if the released key is one of the arrow keys, set the respective keyDown variable to be false
+		if(e.keyCode>=37 && e.keyCode<=40) { keysDown[e.keyCode] = false; }
+	});
+}
 
+//the draw loop for the game
+function drawGame(){
+    //return if the document does not contain a canvas, or canvas can not be found
+    if (ctx == null) {return;}
+    //set currentFrameTime to the current second
+    var currentFrameTime = Date.now()
+    //calculate time elapsed between the last and current frames
+    var timeElapsed = currentFrameTime - lastFrameTime;
+    //obatin the current second
+    var sec = Math.floor(Date.now()/1000);
+    //if the true current second is not equal to the currentSecond variable:
+    if(sec!=currentSecond)                                                  //This means a second has elapsed
+    {                                                                       //
+        currentSecond = sec;                                                //set the currentSecond variable equal to the true current second
+        framesLastSecond = frameCount;                                      //use the frameCount for the last second to set framesLastSecond equal to the number of frames in the last second
+        frameCount = 1;                                                     //return frameCount to 1
+    }                                                                       //
+    else{frameCount++}                                              // OR the frameCount per second is increased by one until a second has elapsed
+
+
+    //checking if player movement can be processed
     if(!player.processMovement(currentFrameTime)){
         if(keysDown[38] && player.tileFrom[1]>0 && gameMap[toIndex(player.tileFrom[0], player.tileFrom[1]-1)]==1) { player.tileTo[1]-= 1; }
 		else if(keysDown[40] && player.tileFrom[1]<(mapH-1) && gameMap[toIndex(player.tileFrom[0], player.tileFrom[1]+1)]==1) { player.tileTo[1]+= 1; }
