@@ -71,10 +71,10 @@ function drawGame(){
 
     //checking if player movement can be processed
     if(!player.processMovement(currentFrameTime)){
-        if(keysDown[38] && player.tileFrom[1]>0 && gameMap[toIndex(player.tileFrom[0], player.tileFrom[1]-1)]==1) { player.tileTo[1]-= 1; }
-		else if(keysDown[40] && player.tileFrom[1]<(mapH-1) && gameMap[toIndex(player.tileFrom[0], player.tileFrom[1]+1)]==1) { player.tileTo[1]+= 1; }
-		else if(keysDown[37] && player.tileFrom[0]>0 && gameMap[toIndex(player.tileFrom[0]-1, player.tileFrom[1])]==1) { player.tileTo[0]-= 1; }
-        else if(keysDown[39] && player.tileFrom[0]<(mapW-1) && gameMap[toIndex(player.tileFrom[0]+1, player.tileFrom[1])]==1) { player.tileTo[0]+= 1; }
+        if(keysDown[38] && player.tileFrom[1]>0 && toIndex(player.tileFrom[0], player.tileFrom[1]-1)==1) { player.tileTo[1]-= 1; }
+		else if(keysDown[40] && player.tileFrom[1]<(mapH-1) && toIndex(player.tileFrom[0], player.tileFrom[1]+1)==1) { player.tileTo[1]+= 1; }
+		else if(keysDown[37] && player.tileFrom[0]>0 && toIndex(player.tileFrom[0]-1, player.tileFrom[1])==1) { player.tileTo[0]-= 1; }
+        else if(keysDown[39] && player.tileFrom[0]<(mapW-1) && toIndex(player.tileFrom[0]+1, player.tileFrom[1])==1) { player.tileTo[0]+= 1; }
         
         if(player.tileFrom[0]!=player.tileTo[0] || player.tileFrom[1]!=player.tileTo[1])
 		{ player.timeMoved = currentFrameTime; }
@@ -82,7 +82,7 @@ function drawGame(){
 
     for (var y = 0; y < mapH; y++){
         for (var x = 0; x < mapW; x++){
-            switch(gameMap[((y*mapW)+x)]){
+            switch(gameMap[x][y]){
 
                 case 0:
                     ctx.fillStyle = '#000000'
@@ -146,5 +146,5 @@ Character.prototype.processMovement = function(t){
 }
 
 function toIndex(x,y){
-    return((y*mapW)+x)
+    return(gameMap[x][y])
 }
