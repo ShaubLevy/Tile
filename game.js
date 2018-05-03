@@ -25,51 +25,61 @@ var gameMap = [
 	0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 ];*/
-
+//creating a temp map
+/*
+var gameMap = [
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
+	0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+];*/
 //the pixel width and height of a single tile
-var tileW = 40, tileH = 40;
 //the tile width and height of the whole map
 var mapW = 20, mapH = 20;
 
 var gameMap = new blankMap(mapW,mapH)
-
 //variables used for framerate calculation
-//currentSecond stores the current second for which the framerate will be counted: it updates to the next second when 1 full second has elapsed
 //frameCount is used to show the number of frames per second: it increases by 1 each frame until a second has elapsed, then it resets to 1
-//framesLastSecond stores the frameCount from the previous second to display
 var currentSecond = 0, frameCount = 0, framesLastSecond = 0, lastFrameTime = 0;
-//create a variable that holds keypress information
 var keysDown = {
-    37 : false,
     38 : false,
     39 : false,
     40 : false 
-}
 
 //create a character to be controlled by the player
 var player = new Character();
 
-window.onload = function(){
     canvas = document.getElementById('game')
-    canvas.width = tileW * mapW
     canvas.height = tileH * mapH
-    ctx = canvas.getContext('2d');
+
     this.requestAnimationFrame(drawGame);
-    ctx.font = 'bold 10pt sans-serif'
     window.addEventListener("keydown", function(e) {
-		if(e.keyCode>=37 && e.keyCode<=40) { keysDown[e.keyCode] = true; }
-	});
-	window.addEventListener("keyup", function(e) {
-		if(e.keyCode>=37 && e.keyCode<=40) { keysDown[e.keyCode] = false; }
-	});
-}
 
-function drawGame(){
-    if (ctx == null) {return;}
-
-    var currentFrameTime = Date.now()
+	});
+    if(sec!=currentSecond)
+    {
+        currentSecond = sec;
+        framesLastSecond = frameCount;
+        frameCount = 1;
+    }
+    else{frameCount++}
     var timeElapsed = currentFrameTime - lastFrameTime;
-
     var sec = Math.floor(Date.now()/1000);
     if(sec!=currentSecond)
     {
