@@ -7,7 +7,32 @@ var tileW = 40, tileH = 40;
 //the tile width and height of the whole map
 var mapW = 20, mapH = 20;
 
-var gameMap = new blankMap(mapW,mapH)
+//var gameMap = new blankMap(mapW,mapH)
+
+var gameMap = [
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+	0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0,
+	0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0,
+	0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0,
+	0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0,
+	0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 0,
+	0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0,
+	0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0,
+	0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0,
+	0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0,
+	0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+];
+
+console.log(gameMap)
 
 //variables used for framerate calculation
 //currentSecond stores the current second for which the framerate will be counted: it updates to the next second when 1 full second has elapsed
@@ -128,13 +153,16 @@ function drawGame(){
                     ctx.fillStyle = '#ccffcc'
             }
             ctx.fillRect( viewport.offset[0] + (x*tileW), viewport.offset[1] + (y*tileH),
-				tileW, tileH);
+                tileW, tileH);
+                
+            ctx.fillStyle = '#ff0000'
+            ctx.fillText('[' + y + ',' + x + ']', viewport.offset[0] + (x*tileW), viewport.offset[1] + (y*tileH) + tileH/2)
         }
     }
 
     ctx.fillStyle = "#0000ff";
 	ctx.fillRect(viewport.offset[0] + player.position[0], viewport.offset[1] + player.position[1],
-		player.dimensions[0], player.dimensions[1]);
+        player.dimensions[0], player.dimensions[1]);
 
     ctx.fillStyle = '#ff0000'
     ctx.fillText('FPS: ' + framesLastSecond, 10, 20)
